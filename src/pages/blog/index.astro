@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro';
+import Navigation from "../../components/generic/header"
+import BlogSection from "../../components/generic/blogSection"
+
+const title = 'Blog';
+const description = 'Latest articles.';
+{/* const permalink = `${Astro.site.href}blog`; */}
+
+
+interface BlogItemProps {
+  date: string;
+  title: string;
+  children: React.ReactNode;
+}
+
+
+import type { CollectionEntry } from 'astro:content';
+let allPosts = await getCollection('posts');
+allPosts = allPosts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+
+console.log("allPosts: ", allPosts);
+
+---
+
+<Layout title={title} description={description} current="blog">
+  <main>
+    <Navigation client:only="react" />
+
+    <BlogSection client:only="react" blogItems={allPosts} />
+{ /*
+  <div class="container">
+    <h1>Blog</h1>
+    {allPosts.map((post, index) => {
+      const href = `/blog/${post.data.slug}`;
+      return (
+        <div>
+          { index !== 0 && <hr /> }
+          <div class="post-item">
+            <h2>
+              <a href={href}>{post.data.title}</a>
+            </h2>
+            <p>{post.data.description}</p>
+            <div class="post-item-footer">
+              <span class="post-item-date">— {post.data.publishDate}</span>
+            </div>
+          </div>
+        </div>
+      )
+    })}
+  </div>
+
+  */}
+
+  </main>
+</Layout>
+
+
+{/*
+<style>
+  h2,
+  .post-item-footer {
+    font-family: var(--font-family-sans);
+    font-weight: 700;
+  }
+
+  .post-item-date {
+    color: var(--text-secondary);
+    text-align: left;
+    text-transform: uppercase;
+    margin-right: 16px;
+  }
+
+  hr {
+    margin: 60px auto;
+  }
+</style>
+*/}

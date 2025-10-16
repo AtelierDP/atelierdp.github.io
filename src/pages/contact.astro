@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from "../components/generic/header"
+import FooterSection from "../components/generic/footer"
+---
+
+<Layout title="Landing Page">
+	<main>
+    <Header client:only="react" />
+    <FooterSection client:only="react" />
+  </main>
+</Layout>

@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from "../components/generic/header"
+import Features from "../components/generic/features"
+import FooterAbout from "../components/generic/footer"
+---
+
+
+<Layout title="About Us Page">
+	<main>
+    <Header client:only="react" />
+    <Features client:only="react" />
+    <FooterAbout client:only="react" />
+  </main>
+</Layout>

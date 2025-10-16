@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from "../components/generic/header"
+import FeaturePresentation from "../components/generic/feature"
+import FeatureFront from "../components/generic/featureFront"
+import Footer from "../components/generic/footer"
+
+---
+
+<Layout title="Presentation Page">
+	<main>
+    <Navigation client:only="react" />
+    <FeatureFront client:only="react" />
+    <FeaturePresentation client:only="react" />
+    <Footer client:only="react" />
+  </main>
+</Layout>
+
+
+{/*
+  <Features client:only="react" />
+*/}
