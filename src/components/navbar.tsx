@@ -8,8 +8,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Avatar,
-  Card,
   IconButton,
 } from "@material-tailwind/react";
 import {
@@ -28,6 +26,7 @@ import {
  
 
 // blog pages menu
+/*
 const blogItems = [
   {
     title: "Recepten",
@@ -44,6 +43,21 @@ const blogItems = [
   {
     title: "Alles",
     href: "/blog"
+  },
+  {
+    title: "Tag-categorieën",
+    href: "/tags"
+  }
+];
+*/
+const defaultBlogItems = [
+  {
+    title: "Alles",
+    href: "/blog"
+  },
+  {
+    title: "Tag-categorieën",
+    href: "/tags"
   }
 ];
 
@@ -80,7 +94,21 @@ const navListItems = [
   */}
 
 
-function BlogListMenu() {
+ interface Props {
+   blogTypes: string[];
+ }
+
+function BlogListMenu(  { blogTypes }: Props) {
+
+  const blogItems = blogTypes.length > 0 ? blogTypes.map((type) => {
+    return {
+      title: type.charAt(0).toUpperCase() + type.slice(1),
+      href: `/blog/${type.toLowerCase()}`
+    };
+  }) : [];
+  blogItems.push(...defaultBlogItems);
+
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
   const triggers = {
@@ -194,11 +222,15 @@ function NavListMenu() {
 }
 
  
-function NavList() {
+ interface Props {
+   blogTypes: string[];
+ }
+
+function NavList( { blogTypes }: Props) {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu />
-      <BlogListMenu />
+      <BlogListMenu blogTypes={blogTypes}/>
 
       {navListItems.map(({ label, icon, url }, key) => (
         <Typography
@@ -218,8 +250,11 @@ function NavList() {
     </ul>
   );
 }
+ interface Props {
+   blogTypes: string[];
+ }
  
-export default function ComplexNavbar() {
+export default function ComplexNavbar({ blogTypes }: Props) {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const [shouldShowBorder, setShouldShowBorder] = React.useState(false);
 
@@ -263,7 +298,7 @@ export default function ComplexNavbar() {
           Atelier DP
         </Typography>
         <div className="hidden lg:flex ml-auto">
-          <NavList />
+          <NavList blogTypes={blogTypes} />
         </div>
         <IconButton
           size="sm"
@@ -279,7 +314,7 @@ export default function ComplexNavbar() {
         </a>
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
-        <NavList />
+        <NavList  blogTypes={blogTypes}/>
       </Collapse>
     </Navbar>
   );

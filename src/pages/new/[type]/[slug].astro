@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ReceptDetail from "../../../components/recepten/receptDetail"
+import DefaultLayout from '../../../layouts/DefaultLayout.astro';
+
+import contentParagraph from '../../../components/recepten/contentParagraph.astro';
+
+interface Props {
+  recept: CollectionEntry<'recepten'>;
+}
+ 
+export async function getStaticPaths() {
+  const recepten = await getCollection('recepten');
+  return recepten.map((recept) => ({
+    params: { type:recept.data.type , slug: recept.data.slug },
+    props: { recept },
+  }));
+}
+const { recept } = Astro.props;
+const { Content } = await render(recept);
+
+---
+ 
+<DefaultLayout title={recept.data.title} >
+  <ReceptDetail recept={recept} client:only>
+     <Content components={{p: contentParagraph}}/>
+  </ReceptDetail>
+</DefaultLayout>

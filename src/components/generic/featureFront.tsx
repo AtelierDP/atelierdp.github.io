@@ -40,9 +40,9 @@ export function FeatureFront() {
             <Typography variant="lead" className="mb-10 font-normal !text-gray-500" >
                 Iedereen zit vol ideeën. Ze uitwerken en tot leven brengen is een volgende stap.
                 <br />
-                Jezelf uitdagen om telkens nieuwe dingen te leren en te ontdekken is voor mij een vorm van creativiteit. 
+                Mezelf uitdagen om telkens nieuwe dingen te leren en te ontdekken is voor mij een vorm van creativiteit. 
                 Of het nu gaat om technologie, design, kunst, koken, broodbakken of werken met hout en metaal maakt niet uit.
-                Telkens ontdekken wat de limieten zijn en hoe je die kan verleggen is de kunst.
+                Telkens ontdekken wat de limieten zijn en hoe ik die kan verleggen is de kunst.
                 <br/>
                 En die ontdekkingen deel ik hier, omdat kennis delen ook een vorm van creativiteit is.
               <br />

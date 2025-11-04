@@ -1,15 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from "../components/generic/header"
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+
 import Features from "../components/generic/features"
-import Footer from "../components/generic/footer"
+
+
+import * as OverContent from '../../content/pages/over.mdx'
+import OverData from '../../content/pages/over.json' assert { type: 'json' };
+
+console.log("Overdata in Over.astro:", OverData);
+
+const { title, description } = OverContent.frontmatter;
 ---
 
 
-<Layout title="About Us Page">
-	<main>
-    <Header client:only="react" />
-    <Features client:only="react" />
-    <Footer client:only="react" />
-  </main>
-</Layout>
+<DefaultLayout title={title} metaDescription={description}>
+    <OverContent.Content />
+    <Features features={OverData.features} client:only="react" />
+</DefaultLayout>

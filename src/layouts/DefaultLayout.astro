@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header, { NavigationBar } from "../components/generic/header"
+import Footer from "../components/generic/footer"
+import { getCollection } from 'astro:content';
+
+export interface Props {
+  title: string;
+  metaDescription?: string;
+}
+
+const { title, metaDescription } = Astro.props;
+
+
+// 1. Haal alle blogposts op
+const alleRecepten = await getCollection('recepten');
+
+// 2. Verzamel alle unieke tags
+const uniqueTypes = new Set<string>();
+alleRecepten.forEach(recept => {
+    uniqueTypes.add(recept.data.type.toLowerCase()); // Zet om naar kleine letters voor consistentie
+});
+
+// 3. Converteer naar een gesorteerde array
+const blogItems = Array.from(uniqueTypes).sort(); // Sorteer de tags alfabetisch
+
+console.log("Blog items in layout:", blogItems);
+
+
+---
+<Layout title={title}>
+  <div class="container mx-auto px-4 py-4">
+  <NavigationBar client:only="react" blogTypes={blogItems} />
+  </div>
+  <main class="container mx-auto px-4 py-4">
+    <container class="pt-4 pb-4">
+    <slot />
+    </container>
+  </main>
+  <Footer client:only="react" />
+</Layout>

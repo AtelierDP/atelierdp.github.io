@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content'
+import ReceptenSection from "../../../components/recepten/receptenSection"
+import DefaultLayout from '../../../layouts/DefaultLayout.astro';
+
+const title = 'Recepten';
+const description = 'Latest articles.';
+{/* const permalink = `${Astro.site.href}blog`; */}
+
+let alleRecepten = await getCollection('recepten');
+
+const recepten = alleRecepten.filter(recept => !recept.data.draft && recept.data.type == "recept").sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+---
+
+<DefaultLayout title={title} >
+    <ReceptenSection recepten={recepten} client:only />
+</Layout>
+

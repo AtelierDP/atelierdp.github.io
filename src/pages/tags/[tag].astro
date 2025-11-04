@@ -1,0 +1,46 @@
+---
+import ReceptCard from '../../components/recepten/receptCard'; // Hergebruik je bestaande component
+import { getCollection } from 'astro:content';
+import DefaultLayout from '../../layouts/DefaultLayout.astro';
+
+// 1. getStaticPaths is nodig voor dynamische generatie
+export async function getStaticPaths() {
+  const alleRecepten = await getCollection('recepten');
+  const tags = new Set<string>();
+
+  alleRecepten.forEach(post => {
+    post.data.tags.forEach(tag => tags.add(tag.toLowerCase()));
+  });
+
+  // Genereer een pad-object voor elke unieke tag
+  return Array.from(tags).map(tag => ({
+    params: { tag: tag },
+    props: { tag: tag }, // Geef de tag mee als prop
+  }));
+}
+
+// 2. Ontvang de props die door getStaticPaths zijn doorgegeven
+const { tag } = Astro.props;
+
+// 3. Haal alle artikelen op en filter op de huidige tag
+const alleRecepten = await getCollection('recepten');
+const filteredPosts = alleRecepten.filter(recept => 
+  recept.data.tags.map(t => t.toLowerCase()).includes(tag)
+).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()); // Sorteer op datum
+---
+
+
+<DefaultLayout title={`Artikels met tag: ${tag}`}>
+    <h1 class="text-4xl font-bold mb-8">Artikels over: <span class="text-blue-600">#{tag}</span></h1>
+    
+    <p class="mb-6 text-gray-600">
+        Er zijn **{filteredPosts.length}** artikels gevonden met deze tag.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filteredPosts.map(recept => (
+        // Render elk gefilterd artikel met je bestaande component
+        <ReceptCard recept={recept} /> 
+      ))}
+    </div>
+</DefaultLayout>

@@ -1,13 +1,6 @@
+import { Card } from "@material-tailwind/react";
 import React from "react";
-import { Card, CardBody, Typography } from "@material-tailwind/react";
-import {
-  EyeIcon,
-  ChatBubbleOvalLeftEllipsisIcon,
-  BoltIcon,
-  FaceSmileIcon,
-  LinkIcon,
-  HeartIcon,
-} from "@heroicons/react/24/solid";
+//import { Card, CardBody, Typography } from "@material-tailwind/react";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -15,9 +8,19 @@ interface FeatureCardProps {
   children: React.ReactNode;
 }
 
+interface FeatureElementProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+interface FeatureProps {
+  features: FeatureElementProps[];
+}
+
 function FeatureCard({ icon, title, children }: FeatureCardProps) {
   return (
-    <Card color="transparent" shadow={false}>
+    <Card shadow={false}>
       <CardBody className="grid justify-center text-center">
         <div className="mx-auto mb-6 grid h-12 w-12 place-items-center rounded-full bg-dark p-2.5 text-white">
           {icon}
@@ -39,6 +42,7 @@ function FeatureCard({ icon, title, children }: FeatureCardProps) {
   );
 }
 
+/*
 const features = [
   {
     icon: <EyeIcon className="h-6 w-6" strokeWidth={2} />,
@@ -80,11 +84,15 @@ const features = [
   },
 ];
 
-export function FeatureSectionOne() {
+*/
+
+export function FeatureSectionOne({features}: FeatureProps) {
+//console.log("Features:", features);
+
   return (
     <section className="py-28 px-4">
       <div className="container mx-auto mb-20 text-center">
-        <Typography color="dark" className="mb-2 font-bold text-lg">
+        <Typography className="text-blue-gray mb-2 font-bold text-lg">
           Social Analytics
         </Typography>
         <Typography variant="h2" color="blue-gray" className="mb-4">

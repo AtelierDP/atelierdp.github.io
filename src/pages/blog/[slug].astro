@@ -4,37 +4,46 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Navigation from "../../components/generic/header"
  
 interface Props {
-  post: CollectionEntry<'blog'>;
+  post: CollectionEntry<'posts'>;
 }
  
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('blog');
+  const blogPosts = await getCollection('posts');
   return blogPosts.map((post) => ({
     params: { slug: post.data.slug },
     props: { post },
   }));
 }
+
 const { post } = Astro.props;
+console.log("In [slug].astro, blogpost: ", post);
+
+
 const { Content } = await render(post);
+
+console.log("In [slug].astro, recept title: ", post.data.title);
 ---
- 
-<Layout title="test-post">
-  <div>
-    <article>
-      <Image
-        src={post.data.cover}
-        alt={post.data.title}
-        class="object-cover object-center !m-0 aspect-square block"
-        width={600}
-        height={600}
-      />
+
+<Layout title={post.data.title} >
+  <main>
+    <Navigation client:only="react" />
+{/*
+    <BlogSection client:only="react" posts={allPosts} />
+     */}
+<section class="py-28 px-4">
+      <div class="container mx-auto mb-20 text-center">
       <h1 class="md:!text-5xl md:!leading-[1.2]">{post.data.title}</h1>
       <p class="lead">{post.data.excerpt}</p>
       <div>
+        {/*
+        */}
         <Content />
       </div>
-    </article>
-  </div>
+      </div>
+      </section>
+
+  </main>
 </Layout>

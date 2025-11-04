@@ -1,0 +1,28 @@
+---
+import NavigationBar from '../../components/generic/header';
+import TagList from '../../components/generic/taglist';
+import DefaultLayout from '../../layouts/DefaultLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 1. Haal alle blogposts op
+const alleRecepten = await getCollection('recepten');
+
+// 2. Verzamel alle unieke tags
+const uniqueTags = new Set<string>();
+alleRecepten.forEach(recept => {
+  recept.data.tags.forEach(tag => {
+    uniqueTags.add(tag.toLowerCase()); // Zet om naar kleine letters voor consistentie
+  });
+});
+
+// 3. Converteer naar een gesorteerde array
+const tags = Array.from(uniqueTags).sort(); 
+
+---
+
+<DefaultLayout title="Tag Cloud">
+    <h1 class="text-4xl font-bold mb-8">🏷️ Alle Tags</h1>
+    <div class="flex flex-wrap gap-3">
+        <TagList tags={tags} />
+        </div>
+</DefaultLayout>

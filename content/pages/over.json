@@ -1,0 +1,15 @@
+{
+ "features" : [
+  {
+    "icon": "<EyeIcon className=\"h-6 w-6\" strokeWidth={2} />",
+    "title": "Check our team",
+    "description":
+      "For standing out. But the time is now to be okay to be the greatest you. Would you believe in what you believe in, if you were the only one"
+  },
+  {
+    "icon": "<ChatBubbleOvalLeftEllipsisIcon className=\"h-6 w-6\" strokeWidth={2} />",
+    "title": "Support 24/7",
+    "description": "As we live, our hearts turn colder. Cause pain is what we go through as we become older. We get insulted by others, lose trust for those others."
+  }
+]
+}
